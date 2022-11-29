@@ -24,39 +24,56 @@ let list_cont = document.querySelector(".list-cont");
 //     })
 // }
 //   remove();
+
+
 let checkingFunk = () => {
   let checkinp = document.querySelectorAll(".checkinp");
 
   checkinp.forEach((v, index) => {
-       if (document.getElementById("myCheck").checked) {
-         alert("checked");
-       } else {
-         alert("You didn't check it! Let me check it for you.");
-       }
 
-    if (1 > 2) {
-      document.querySelectorAll(".todoItemvalue").forEach((el, i) => {
-        el.style.textDecoration = "line-through";
-      });
-    } else {
+      v.addEventListener("click", (value) => {
+        linethroughFunk ()
 
-      // document.querySelectorAll(".todoItemvalue").forEach((el, i) => {
-      //   el.style.textDecoration = "none";
-      // });
-    }
-
-    v.addEventListener("click", () => {
       if (todoArray[index].checked === false) {
-        todoArray[index].checked = true;
-      } else {
-        todoArray[index].checked = false;
-      }
-    });
+          todoArray[index].checked = true;
+        
 
-    
+      } else {
+          todoArray[index].checked = false;
+      
+          // linethroughFunk ()
+
+    }
+    });
   });
 };
 
+let linethroughFunk = ()=>{
+       
+          document.querySelectorAll(".todoItemvalue").forEach((el, valueIndex) => {
+
+                 if (todoArray[valueIndex].checked==true) {
+
+                    el.style.textDecoration = "line-through";
+                    console.log(valueIndex);
+            
+                }
+                if (todoArray[valueIndex].checked==false) {
+                     el.style.textDecoration = "none";
+                      
+                }
+            
+         
+      })
+
+       //     document.querySelectorAll(".todoItemvalue").forEach((el, i) => {
+      //       if (index==i) {
+      //         console.log(index,i);
+
+      //     el.style.textDecoration = "none";
+      //       }
+      // }) 
+}
 let creattodofunc = (inputvalue) => {
   let parent3 = document.createElement("div");
   parent3.classList.add("parent3");
