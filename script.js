@@ -2,202 +2,115 @@ let input = document.querySelector(".form-control");
 let btnprimary = document.querySelector(".btn");
 let todoArray = [];
 let list_cont = document.querySelector(".list-cont");
+let parent3 = document.querySelectorAll(".parent3");
 
-// let crossLinefunc = ()=>{
-//       document.querySelectorAll(".todoItemvalue").forEach((el, i) => {
-//         el.addEventListener("click", (v, i) => {
-//                v.style.textDecoration = "underline overline";
+let showButton = document
+  .querySelector(".showButton")
+  .addEventListener("click", () => {
+    localStorage.clear();
+ 
+    list_cont.innerHTML = "";
+  });
 
-//         });
-//       });
-// }
-// crossLinefunc()
-// function remove() {
-//     document.querySelectorAll('.del').forEach((el, i) => {
-//         el.addEventListener("click", (v,i) => {
-//             // if (todoArray[i].checked===true) {
-//                     el.parentNode.remove()
-//         todoArray.splice(i,1)
+if (localStorage.getItem("testObject")) {
+  todoArray.push(...JSON.parse(localStorage.getItem("testObject")));
+  todoArray.forEach((v, i) => {
+    creattodofunc(v.value);
 
-//             // }
-//         })
-//     })
-// }
-//   remove();
+    if (v.checked == true) {
+      let divval = document.querySelectorAll(".todoItemvalue");
+      divval[i].style.textDecoration = "line-through";
+      let checkinp = document.querySelectorAll(".checkinp");
 
-
-let checkingFunk = () => {
-  let checkinp = document.querySelectorAll(".checkinp");
-
-  checkinp.forEach((v, index) => {
-
-      v.addEventListener("click", (value) => {
-        linethroughFunk ()
-
-      if (todoArray[index].checked === false) {
-          todoArray[index].checked = true;
-        
-
-      } else {
-          todoArray[index].checked = false;
-      
-          // linethroughFunk ()
-
+      checkinp[i].checked = true;
     }
+  });
+}
+
+function remove(del, fromLocal) {
+  del.forEach((v, delindex) => {
+    v.addEventListener("click", () => {
+      fromLocal.forEach((valid, ind) => {
+        if (valid.checked === true && ind ==delindex) {
+              console.log(valid);
+
+          fromLocal.splice(delindex, 1);
+          list_cont.innerHTML = "";
+          fromLocal.forEach((v) => creattodofunc(v.value));
+          localStorage.setItem("testObject", JSON.stringify(fromLocal));
+        }
+      });
     });
   });
-};
-
-let linethroughFunk = ()=>{
-       
-          document.querySelectorAll(".todoItemvalue").forEach((el, valueIndex) => {
-
-                 if (todoArray[valueIndex].checked==true) {
-
-                    el.style.textDecoration = "line-through";
-                    console.log(valueIndex);
-            
-                }
-                if (todoArray[valueIndex].checked==false) {
-                     el.style.textDecoration = "none";
-                      
-                }
-            
-         
-      })
-
-       //     document.querySelectorAll(".todoItemvalue").forEach((el, i) => {
-      //       if (index==i) {
-      //         console.log(index,i);
-
-      //     el.style.textDecoration = "none";
-      //       }
-      // }) 
 }
-let creattodofunc = (inputvalue) => {
+
+function creattodofunc(input) {
   let parent3 = document.createElement("div");
   parent3.classList.add("parent3");
 
-  parent3.innerHTML = `       <div class="sections1">
-                              <h5 class='todoItemvalue'>${inputvalue}</h5>
-                              </div>
+  parent3.innerHTML = ` <div class="sections1">
 
+                              <h5 class='todoItemvalue' contenteditable="true">${input}</h5>
+                              </div>
                               <div class="sections">
-                              <input type="checkbox" class="checkinp" id="myCheck">
-                              <p class="del">X</p>
-                              </div>
-                      `;
-  list_cont.append(parent3);
-  checkingFunk();
-};
 
-let todoaddingFunc = () => {
-  let inputvalue = input.value;
-  if (inputvalue) {
-    let todoitoms = {
-      id: new Date().getSeconds(),
-      todoitem: inputvalue,
+                              <i class="bi bi-check2"></i>
+
+                              <input type="checkbox" class="checkinp" >
+                              
+                              <i class="bi bi-trash-fill del"></i>
+                              </div> `;
+  list_cont.append(parent3);
+
+  let checkinp = document.querySelectorAll(".checkinp");
+  let fromLocal = JSON.parse(localStorage.getItem("testObject"));
+  let del = document.querySelectorAll(".del");
+
+  checkinp.forEach((val, index) => {
+    val.addEventListener("click", () => {
+      checkingFunk(val, index, fromLocal);
+    });
+  });
+
+  remove(del, fromLocal);
+}
+
+function checkingFunk(val, index, fromLocal) {
+  let divval = document.querySelectorAll(".todoItemvalue");
+  if (val.checked === true) {
+    fromLocal[index].checked = true;
+    divval[index].style.textDecoration = "line-through";
+    localStorage.setItem("testObject", JSON.stringify(fromLocal));
+  } else {
+    divval[index].style.textDecoration = "none";
+    fromLocal[index].checked = false;
+    localStorage.setItem("testObject", JSON.stringify(fromLocal));
+  }
+}
+
+let createtodoitems = () => {
+  if (input.value) {
+    let todoitem = {
+      value: input.value,
       checked: false,
     };
-
-    todoArray.push(todoitoms);
-    creattodofunc(inputvalue);
     input.value = "";
 
+    todoArray.push(todoitem);
+    localStorage.setItem("testObject", JSON.stringify(todoArray));
+    let fromLocal = JSON.parse(localStorage.getItem("testObject"));
+    creattodofunc(fromLocal[fromLocal.length - 1].value);
+
+    // let answer = document.querySelector(".todoItemvalue").contentEditable;
     return todoArray;
   }
 };
 
 btnprimary.addEventListener("click", () => {
-  todoaddingFunc();
+  createtodoitems();
 });
 btnprimary.addEventListener("keypress", (e) => {
   if (e.keyCode === 13) {
-    todoaddingFunc();
-    // setMyLocalStorage(todoArray);
+    createtodoitems();
   }
 });
-
-// ------------------------------------------------------------------
-// let showButton = document.querySelector(".showButton").addEventListener('click',()=>{
-// soweArray();
-// // setMyLocalStorage(todoArray);
-// })
-
-// function soweArray() {
-//     let retrievedObject = JSON.parse(localStorage.getItem("testObject"));
-//     console.log(retrievedObject);
-// }
-// function setMyLocalStorage(todoArray) {
-//   let myArray = JSON.parse(localStorage.getItem("testObject"))
-//   if (myArray != null) {
-//     console.log(myArray);
-//   } else {
-//     localStorage.setItem("testObject", JSON.stringify(todoArray));
-//   }
-// }
-// setInterval(()=>{
-// console.log(todoArray);
-// },1000)
-// somenewArr.forEach((val, index) => {
-//         if (somenewArr.length > 0) {
-//           somenewArr.splice(index, 1);
-//         }
-//       });
-// ------------------------------------------------------------------
-
-// somenewArr.forEach((val, index) => {
-//         if (somenewArr.length > 0) {
-//           somenewArr.splice(index, 1);
-//         }
-//       });
-
-// edoed-----------------------------------------------------------------------------
-// let input = document.querySelector(".form-control");
-// let btnprimary = document.querySelector(".btn");
-// let todoArray = [];
-// let list_cont = document.querySelector(".list-cont");
-
-
-// function todoaddingFunc() {
-//     let parent3 = document.createElement("div");
-//     parent3.classList.add(".parent3");
-
-//     parent3.innerHTML = `
-//                             <h5>${input.value}</h5>
-//                             <input class="form-check-input checkinp" type="checkbox" value="" id="flexCheckIndeterminate">
-//                             <p class="del">X</p>`;
-//     list_cont.append(parent3);
-//     remove()
-// };
-
-// btnprimary.addEventListener("click", () => {
-//     todoaddingFunc();
-// });
-
-// btnprimary.addEventListener("keypress", (e) => {
-//     if (e.keyCode === 13) {
-//         todoaddingFunc();
-//     }
-// });
-
-// function remove() {
-//     document.querySelectorAll('.del').forEach((el, i) => {
-//         el.addEventListener("click", () => {
-//             el.parentNode.remove()
-//         })
-//     })
-// }
-
-// function remove() {
-//     document.querySelectorAll('.del').forEach((el, i) => {
-//         el.addEventListener("click", (v,i) => {
-//             // if (todoArray[i].checked===true) {
-//                     el.parentNode.remove()    
-//         todoArray.splice(i,1)
-
-//             // }
-//         })
-//     })
-// }
-//   remove();
