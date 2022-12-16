@@ -2,8 +2,8 @@ let input = document.querySelector(".form-control");
 let btnprimary = document.querySelector(".btn");
 let todoArray = [];
 let list_cont = document.querySelector(".list-cont");
-let parent3 = document.querySelectorAll(".parent3");
-
+// let parent3 = document.querySelectorAll(".parent3");
+ // let answer = document.querySelector(".todoItemvalue").contentEditable;
 let showButton = document
   .querySelector(".showButton")
   .addEventListener("click", () => {
@@ -44,13 +44,20 @@ function remove(del, fromLocal) {
   });
 }
 
+function chengevaluefunc(todoItemvalue, fromLocal) {
+      todoItemvalue.forEach((val,ind)=>{
+        console.log(parent3);
+      })
+}
+
+
 function creattodofunc(input) {
   let parent3 = document.createElement("div");
   parent3.classList.add("parent3");
 
   parent3.innerHTML = ` <div class="sections1">
 
-                              <h5 class='todoItemvalue' contenteditable="true">${input}</h5>
+                              <h5 class='todoItemvalue' contenteditable="false">${input}</h5>
                               </div>
                               <div class="sections">
 
@@ -65,6 +72,8 @@ function creattodofunc(input) {
   let checkinp = document.querySelectorAll(".checkinp");
   let fromLocal = JSON.parse(localStorage.getItem("testObject"));
   let del = document.querySelectorAll(".del");
+  let bicheck2 = document.querySelectorAll(".bi-check2");
+  let todoItemvalue = document.querySelectorAll(".todoItemvalue");
 
   checkinp.forEach((val, index) => {
     val.addEventListener("click", () => {
@@ -73,6 +82,14 @@ function creattodofunc(input) {
   });
 
   remove(del, fromLocal);
+
+  bicheck2.forEach((val, index) => {
+    val.addEventListener("click", () => {
+      chengevaluefunc(todoItemvalue, fromLocal);
+    });
+  });
+
+  
 }
 
 function checkingFunk(val, index, fromLocal) {
@@ -101,7 +118,7 @@ let createtodoitems = () => {
     let fromLocal = JSON.parse(localStorage.getItem("testObject"));
     creattodofunc(fromLocal[fromLocal.length - 1].value);
 
-    // let answer = document.querySelector(".todoItemvalue").contentEditable;
+   
     return todoArray;
   }
 };
