@@ -13,43 +13,60 @@
   flex-direction: column;
   align-items: center;
 }
-.parent {
-  gap: 13px;
+
+.list-cont{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+
+}
+
+.parent{
   width: 90%;
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
-}
-.parent3 {
-  width: 84%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  border: 3px solid #348f34;
-  border-radius: 5px;
-}
-.sections1 {
-  width: 92%;
-  display: flex;
-  flex-direction: row;
   align-items: center;
+
+}
+
+
+
+
+.parent3 {
+ 
+  width: 90%;
+  display: flex;
+  flex-direction: row;
+  border: 3px solid  #f4511e;
+  border-radius: 5px;
+
 }
 .sections {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  
+}
+.sections2 {
   width: 10%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
   gap: 10px;
+}
+.sections1 {
+  width: 98%;
   display: flex;
   flex-direction: row;
-  align-items: center;
-  justify-content: center;
+ 
+  
 }
-.listparen {
-  width: 60%;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}
+
+
 h5 {
   text-indent: 15px;
   padding: 9px 5px;
@@ -58,17 +75,37 @@ h5 {
 }
 .button {
   border-radius: 4px;
-  background-color: #f4511e;
+  background-color:  #7f9d30;
   border: none;
   color: #FFFFFF;
   text-align: center;
   font-size: 28px;
-  width: 150px;
+  width: 45%;
   transition: all 0.5s;
   cursor: pointer;
   margin: 5px;
+
+}
+
+i{
+  background-color: aliceblue;
+  border: 1px solid;
+  padding: 5px 5px;
+  border-radius: 10%;
+
 }
 i:hover {
   color: darkblue;
   background-color: #f4511e;
+  border: 1px solid;
+}
+/* .displayNone{
+  display: none;
+} */
+.displayBlock{
+  display: block;
+
+}
+.displayNone{
+  display: none;
 }

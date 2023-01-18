@@ -22,19 +22,19 @@ function creattodofunc(input) {
   let parent3 = document.createElement("div");
   parent3.classList.add("parent3"); 
 
-  parent3.innerHTML = ` <div class="sections1 ">
-
+  parent3.innerHTML = ` <div class="sections ">
+                              <div class="sections1">
                               <h5 class='todoItemvalue' contenteditable="false" >${input}</h5>
                               </div>
-                              <div class="sections">
+                              <div class="sections2">
 
-                              <i class="bi bi-check2" ></i>
+                                    <i class="bi bi-check2 ready displayNone" ></i>
+                                    <i class="bi bi-pen edit" ></i>
 
-                              <input type="checkbox" class="checkinp" >
-                              
-                              <i class="bi bi-trash-fill del " ></i>
-                           
-                              </div> `;
+                                    <input type="checkbox" class="checkinp" >
+                                    <i class="bi bi-trash-fill del " ></i>
+                              </div>
+                       </div> `;
   list_cont.append(parent3);
 
   crossingline()
@@ -108,35 +108,35 @@ function crossingline() {
 function removeList() {
   let del = document.querySelectorAll(".del");
   let parent3 = document.querySelectorAll(".parent3");
-  todoArray.length = 0
-  todoArray.push(...JSON.parse(localStorage.getItem("testObject")));
+  // todoArray.length = 0
+  // todoArray.push(...JSON.parse(localStorage.getItem("testObject")));
 
   del.forEach((val,ind)=>{
     val.addEventListener("click",()=>{
+  
       if (todoArray[ind].checked===true) {
-        
-          parent3[ind].remove()
-          todoArray[ind]=''
-          console.log(ind);
-          let user = todoArray.filter(v => v.value != undefined);
+        console.log(ind);
+          // parent3[ind].remove()
+          // todoArray.splice(ind,1)
+          // let user = todoArray.filter(v => v.value != undefined);
          
       
           
-          let list_cont = document.querySelector(".list-cont");
-          list_cont.innerHTML = ''
-          user.forEach((v, i) => {
-            creattodofunc(v.value);
-              if (v.checked == true) {
+          // let list_cont = document.querySelector(".list-cont");
+          // list_cont.innerHTML = ''
+          // user.forEach((v, i) => {
+          //   creattodofunc(v.value);
+          //     if (v.checked == true) {
         
-                let divval = document.querySelectorAll(".todoItemvalue");
-                let checkinp = document.querySelectorAll(".checkinp");
-                divval[i].style.textDecoration = "line-through";
-                checkinp[i].checked = true;
-              }
-          });
+          //       let divval = document.querySelectorAll(".todoItemvalue");
+          //       let checkinp = document.querySelectorAll(".checkinp");
+          //       divval[i].style.textDecoration = "line-through";
+          //       checkinp[i].checked = true;
+          //     }
+          // });
 
 
-          localStorage.setItem("testObject", JSON.stringify(user));
+          // localStorage.setItem("testObject", JSON.stringify(user));
       }
     })
    })
@@ -156,25 +156,31 @@ function removeList() {
 
 
 function editfunction() {
-  let bicheck2 = document.querySelectorAll('.bi-check2')
+  let edit = document.querySelectorAll('.edit')
+  let ready = document.querySelectorAll('.ready')
   let todoItemvalue = document.querySelectorAll('.todoItemvalue')
 
-  bicheck2.forEach((v,ind)=>{
-    v.addEventListener('click',()=>{
-      if (todoItemvalue[ind].getAttribute('contenteditable')=='false') {
+edit.forEach((v,ind)=>{
+      v.addEventListener('click',()=>{
         todoItemvalue[ind].setAttribute('contenteditable',true)
 
-      } else {
-        todoItemvalue[ind].setAttribute('contenteditable',false)
-
-             todoArray.length=0  
-             todoArray.push(...JSON.parse(localStorage.getItem("testObject")));
-             todoArray[ind].value=todoItemvalue[ind].textContent
-             localStorage.setItem("testObject", JSON.stringify(todoArray));
-          }
-
+      v.classList.add("displayNone");
+      ready[ind].classList.remove("displayNone");
     })
-  })
+})
+ready.forEach((v,ind)=>{
+  v.addEventListener('click',()=>{
+               todoItemvalue[ind].setAttribute('contenteditable',false)
+               todoArray.length=0  
+               todoArray.push(...JSON.parse(localStorage.getItem("testObject")));
+               todoArray[ind].value=todoItemvalue[ind].textContent
+               localStorage.setItem("testObject", JSON.stringify(todoArray));
+  v.classList.add("displayNone");
+  edit[ind].classList.remove("displayNone");
+})
+})
+
+
 }
 editfunction() 
 removeList()
